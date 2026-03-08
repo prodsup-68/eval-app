@@ -15,22 +15,22 @@ onRecordCreateRequest((e) => {
   console.log("Processing file for record...");
 
   try {
-    console.log(
-      "Original record data:",
-      e.record.id ?? "new record",
-      e.record.get("is_eval_class"),
-    );
+    // console.log(
+    //   "Original record data:",
+    //   e.record.id ?? "new record",
+    //   e.record.get("is_eval_class"),
+    // );
     // 1. Modify the record BEFORE it hits the database
-    e.record.set("is_eval_class", true);
+    // e.record.set("is_eval_class", true);
     if (e.auth) {
       // 2. Automatically set the "user" field to the current user's ID
       e.record.set("user", e.auth.id);
     }
-    console.log(
-      "Modified record data:",
-      e.record.id ?? "new record",
-      e.record.get("is_eval_class"),
-    );
+    // console.log(
+    //   "Modified record data:",
+    //   e.record.id ?? "new record",
+    //   e.record.get("is_eval_class"),
+    // );
     // 2. e.next() handles the actual saving of the modified record
   } catch (err) {
     console.error("Error in onRecordCreateRequest hook:", err);
