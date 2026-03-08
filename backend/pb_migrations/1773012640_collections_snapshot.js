@@ -834,11 +834,15 @@ migrate((app) => {
           "id": "file1542800728",
           "maxSelect": 1,
           "maxSize": 0,
-          "mimeTypes": [],
+          "mimeTypes": [
+            "image/png",
+            "image/jpeg",
+            "image/webp"
+          ],
           "name": "image",
           "presentable": false,
           "protected": false,
-          "required": false,
+          "required": true,
           "system": false,
           "thumbs": [],
           "type": "file"
@@ -866,10 +870,10 @@ migrate((app) => {
           "system": false,
           "type": "select",
           "values": [
-            "class",
             "nr",
             "ac",
-            "sr"
+            "sr",
+            "course"
           ]
         },
         {
@@ -877,7 +881,7 @@ migrate((app) => {
           "id": "number1800253557",
           "max": null,
           "min": null,
-          "name": "score_avg",
+          "name": "weighted_score",
           "onlyInt": false,
           "presentable": false,
           "required": false,
