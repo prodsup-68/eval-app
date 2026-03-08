@@ -714,6 +714,42 @@ migrate((app) => {
           "presentable": false,
           "system": false,
           "type": "autodate"
+        },
+        {
+          "hidden": false,
+          "id": "bool202460077",
+          "name": "is_eval_class",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "bool"
+        },
+        {
+          "hidden": false,
+          "id": "bool2022899162",
+          "name": "is_eval_nr",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "bool"
+        },
+        {
+          "hidden": false,
+          "id": "bool2512044519",
+          "name": "is_eval_ac",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "bool"
+        },
+        {
+          "hidden": false,
+          "id": "bool2281607622",
+          "name": "is_eval_sr",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "bool"
         }
       ],
       "fileToken": {
@@ -824,7 +860,7 @@ migrate((app) => {
           "hidden": false,
           "id": "select1542800728",
           "maxSelect": 1,
-          "name": "field",
+          "name": "task",
           "presentable": false,
           "required": false,
           "system": false,
@@ -835,6 +871,28 @@ migrate((app) => {
             "ac",
             "sr"
           ]
+        },
+        {
+          "hidden": false,
+          "id": "number1800253557",
+          "max": null,
+          "min": null,
+          "name": "score_avg",
+          "onlyInt": false,
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "number"
+        },
+        {
+          "hidden": false,
+          "id": "json330182174",
+          "maxSize": 0,
+          "name": "score_details",
+          "presentable": false,
+          "required": false,
+          "system": false,
+          "type": "json"
         },
         {
           "hidden": false,
@@ -899,112 +957,13 @@ migrate((app) => {
         },
         {
           "hidden": false,
-          "id": "bool3981121951",
-          "name": "class",
+          "id": "json122697566",
+          "maxSize": 0,
+          "name": "scores",
           "presentable": false,
           "required": false,
           "system": false,
-          "type": "bool"
-        },
-        {
-          "hidden": false,
-          "id": "bool78398662",
-          "name": "nr",
-          "presentable": false,
-          "required": false,
-          "system": false,
-          "type": "bool"
-        },
-        {
-          "hidden": false,
-          "id": "bool3917773051",
-          "name": "ac",
-          "presentable": false,
-          "required": false,
-          "system": false,
-          "type": "bool"
-        },
-        {
-          "hidden": false,
-          "id": "bool4223674586",
-          "name": "sr",
-          "presentable": false,
-          "required": false,
-          "system": false,
-          "type": "bool"
-        },
-        {
-          "hidden": false,
-          "id": "autodate2990389176",
-          "name": "created",
-          "onCreate": true,
-          "onUpdate": false,
-          "presentable": false,
-          "system": false,
-          "type": "autodate"
-        },
-        {
-          "hidden": false,
-          "id": "autodate3332085495",
-          "name": "updated",
-          "onCreate": true,
-          "onUpdate": true,
-          "presentable": false,
-          "system": false,
-          "type": "autodate"
-        }
-      ],
-      "id": "pbc_1538517937",
-      "indexes": [],
-      "listRule": null,
-      "name": "evals",
-      "system": false,
-      "type": "base",
-      "updateRule": null,
-      "viewRule": null
-    },
-    {
-      "createRule": null,
-      "deleteRule": null,
-      "fields": [
-        {
-          "autogeneratePattern": "[a-z0-9]{15}",
-          "hidden": false,
-          "id": "text3208210256",
-          "max": 15,
-          "min": 15,
-          "name": "id",
-          "pattern": "^[a-z0-9]+$",
-          "presentable": false,
-          "primaryKey": true,
-          "required": true,
-          "system": true,
-          "type": "text"
-        },
-        {
-          "cascadeDelete": false,
-          "collectionId": "_pb_users_auth_",
-          "hidden": false,
-          "id": "relation2375276105",
-          "maxSelect": 1,
-          "minSelect": 0,
-          "name": "user",
-          "presentable": false,
-          "required": false,
-          "system": false,
-          "type": "relation"
-        },
-        {
-          "hidden": false,
-          "id": "number2676103138",
-          "max": null,
-          "min": null,
-          "name": "score1",
-          "onlyInt": false,
-          "presentable": false,
-          "required": false,
-          "system": false,
-          "type": "number"
+          "type": "json"
         },
         {
           "hidden": false,
