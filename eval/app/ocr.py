@@ -1,7 +1,37 @@
+import re
+import subprocess
+
 import pytesseract
 from PIL import Image
 from rapidfuzz import fuzz
-import re
+
+
+def test_tesseract():
+    # Test if tesseract is installed and accessible
+    try:
+        result = subprocess.run(
+            ["tesseract", "--version"], capture_output=True, text=True
+        )
+        if result.returncode == 0:
+            print("Tesseract OCR is installed and accessible.")
+        else:
+            print("Tesseract OCR is not accessible. Please check your installation.")
+    except FileNotFoundError:
+        raise RuntimeError(
+            "Tesseract OCR is not installed. Please install it to use the OCR functionality."
+        )
+
+    # Check if the Thai language data is available
+    try:
+        languages = pytesseract.get_languages()
+        if "tha" in languages:
+            print("Tesseract OCR Thai language data is available.")
+        else:
+            print("Tesseract OCR Thai language data is not available.")
+    except Exception as e:
+        raise RuntimeError(
+            f"Error checking Tesseract OCR languages: {e}. Please ensure that the Thai language data is installed."
+        )
 
 
 def get_ocr_options(task):

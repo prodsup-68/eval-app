@@ -96,12 +96,12 @@ onRecordAfterCreateSuccess((e) => {
     const userRecord = $app.findRecordById("users", userId);
     if (task === "course") {
       if (weighted_score >= 75) {
-        userRecord.set("is_eval_class", true);
+        userRecord.set("is_eval_course", true);
       }
       $app
         .logger()
         .info(
-          `User ${userId} - OCR Score: ${weighted_score}, Eval Class: ${userRecord.get("is_eval_class")}`,
+          `User ${userId} - OCR Score: ${weighted_score}, Eval Course: ${userRecord.get("is_eval_course")}`,
         );
     } else if (task === "nr") {
       if (weighted_score >= 70) {

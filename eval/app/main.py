@@ -1,14 +1,19 @@
-from fastapi import FastAPI
-from pydantic import BaseModel
 from pathlib import Path
 from typing import Literal
-from .ocr import evaluate_ocr, get_ocr_options
 
+from fastapi import FastAPI
+from pydantic import BaseModel
+
+from .ocr import evaluate_ocr, get_ocr_options, test_tesseract
+
+# Define paths
 script_path = Path(__file__).resolve()
 parent_project_path = script_path.parent.parent.parent
 storage_path = parent_project_path / "backend" / "pb_data" / "storage"
 print(f"Script path: {script_path}")
 print(f"Storage path: {storage_path}")
+# Test if tesseract is installed and accessible
+test_tesseract()
 
 app = FastAPI()
 

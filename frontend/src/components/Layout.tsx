@@ -4,7 +4,7 @@ import { useAuth } from 'src/hooks/auth';
 
 function Layout() {
   const auth = useAuth();
-  // console.log(auth);
+  console.log(auth);
 
   function signOut() {
     pb.authStore.clear();
