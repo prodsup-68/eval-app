@@ -5,51 +5,15 @@ import { useUpload } from 'src/hooks/upload';
 
 useMutation;
 function Upload() {
-  // const [file, setFile] = useState<File | null>(null);
   const uploads = useUpload();
-
-  console.log('uploads', uploads);
-
-  // const mutationFn = async (file: File) => {
-  //   const formData = new FormData();
-  //   formData.append('image', file);
-  //   formData.append('task', 'course');
-  //   return pb.collection('uploads').create(formData);
-  // };
-
-  // console.log('file', file);
-  // const mutation = useMutation({ mutationFn });
-
-  // function handleFileChange(event: React.ChangeEvent<HTMLInputElement>) {
-  //   setFile(event.target.files?.[0] ?? null);
-  // }
-
+  // console.log('uploads', uploads);
   return (
     <>
       <h1>Upload</h1>
-
-      <div>
-        <h2>Course Uploads</h2>
-        <UploadDisplay task="course" uploads={uploads} />
-      </div>
-
-      <div>
-        <h2>NR Uploads</h2>
-        <UploadDisplay task="nr" uploads={uploads} />
-      </div>
-
-      <div>
-        <h2>AC Uploads</h2>
-        <UploadDisplay task="ac" uploads={uploads} />
-      </div>
-
-      <div>
-        <h2>SR Uploads</h2>
-        <UploadDisplay task="sr" uploads={uploads} />
-      </div>
-
-      {/* <input type="file" accept="image/*" onChange={handleFileChange} />
-      <button onClick={() => mutation.mutate(file as File)}>Upload</button> */}
+      <UploadDisplay task="course" uploads={uploads} />
+      <UploadDisplay task="nr" uploads={uploads} />
+      <UploadDisplay task="ac" uploads={uploads} />
+      <UploadDisplay task="sr" uploads={uploads} />
     </>
   );
 }
@@ -100,7 +64,6 @@ function UploadDisplay({ task, uploads }: UploadDisplayProps) {
           <p>Weighted Score: {fileObj?.weighted_score ?? 0}</p>
         </>
       )}
-
       {!fileObj && (
         <>
           <h3>No file uploaded for {task} yet.</h3>
