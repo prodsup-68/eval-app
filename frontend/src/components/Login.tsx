@@ -21,32 +21,68 @@ function Login() {
   const mutation = useMutation({
     mutationFn: mutationFn,
 
-    onSuccess: (data) => {
-      console.log('Login successful:', data);
+    onSuccess: () => {
       navigate('/');
       auth.refetch();
     },
   });
 
+  function handleSubmit(event: React.FormEvent<HTMLFormElement>) {
+    event.preventDefault();
+    mutation.mutate({ username, password });
+  }
+
   return (
-    <>
-      <h1>Login</h1>
-      <input
-        type="text"
-        placeholder="Username"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="password"
-        placeholder="Password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-      />
-      <button onClick={() => mutation.mutate({ username, password })}>
-        Login
-      </button>
-    </>
+    <div className="mx-auto w-full max-w-md">
+      <div className="card border border-base-300 bg-base-100 shadow-md">
+        <div className="card-body gap-4">
+          <div>
+            <h1 className="card-title text-2xl">Sign in</h1>
+            <p className="text-sm text-base-content/70">
+              Access your account to continue.
+            </p>
+          </div>
+
+          <form className="space-y-4" onSubmit={handleSubmit}>
+            <label className="form-control w-full">
+              <span className="label-text mb-1">Username</span>
+              <input
+                type="text"
+                placeholder="you@example.com"
+                className="input input-bordered w-full"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+              />
+            </label>
+
+            <label className="form-control w-full">
+              <span className="label-text mb-1">Password</span>
+              <input
+                type="password"
+                placeholder="••••••••"
+                className="input input-bordered w-full"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+              />
+            </label>
+
+            {mutation.isError && (
+              <div className="alert alert-error py-2 text-sm">
+                <span>Invalid username or password.</span>
+              </div>
+            )}
+
+            <button
+              type="submit"
+              className={`btn btn-primary w-full ${mutation.isPending ? 'btn-disabled' : ''}`}
+              disabled={mutation.isPending}
+            >
+              {mutation.isPending ? 'Signing in...' : 'Login'}
+            </button>
+          </form>
+        </div>
+      </div>
+    </div>
   );
 }
 

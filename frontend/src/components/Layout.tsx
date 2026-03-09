@@ -4,7 +4,6 @@ import { useAuth } from 'src/hooks/auth';
 
 function Layout() {
   const auth = useAuth();
-  console.log(auth);
 
   function signOut() {
     pb.authStore.clear();
@@ -12,39 +11,53 @@ function Layout() {
   }
 
   return (
-    <div>
-      <header>
-        <nav>
-          <ul>
-            <li>
-              <a href="/">Home</a>
-            </li>
-            <li>
-              <a href="/upload">Upload</a>
-            </li>
-            <li>
-              <a href="/score">Score</a>
-            </li>
+    <div className="min-h-screen bg-base-200 text-base-content">
+      <header className="border-b border-base-300 bg-base-100">
+        <nav className="navbar mx-auto max-w-6xl px-4">
+          <div className="flex-1">
+            <a href="/" className="text-lg font-semibold">
+              PS-68
+            </a>
+          </div>
+
+          <div className="flex-none gap-2">
+            <a href="/" className="btn btn-ghost btn-sm">
+              Home
+            </a>
+            <a href="/upload" className="btn btn-ghost btn-sm">
+              Upload
+            </a>
+            <a href="/score" className="btn btn-ghost btn-sm">
+              Score
+            </a>
 
             {!auth.isAuthenticated && (
-              <li>
-                <a href="/login">Login</a>
-              </li>
+              <a href="/login" className="btn btn-primary btn-sm">
+                Login
+              </a>
             )}
+
             {auth.isAuthenticated && (
-              <li>
-                <button onClick={signOut}>Sign Out</button>
-              </li>
+              <button className="btn btn-outline btn-sm" onClick={signOut}>
+                Sign Out
+              </button>
             )}
-          </ul>
-          <span>{auth?.data?.name ?? 'Guest'}</span>
+
+            <div className="badge badge-neutral badge-outline ml-1 hidden sm:inline-flex">
+              {auth?.data?.name ?? 'Guest'}
+            </div>
+          </div>
         </nav>
       </header>
-      <main>
-        <Outlet />
+
+      <main className="mx-auto w-full max-w-6xl px-4 py-8">
+        <div className="rounded-box border border-base-300 bg-base-100 p-6 shadow-sm">
+          <Outlet />
+        </div>
       </main>
-      <footer>
-        <p>&copy; 2024 My App</p>
+
+      <footer className="footer footer-center border-t border-base-300 bg-base-100 p-4 text-base-content/70">
+        <p>&copy; Production Support 2026</p>
       </footer>
     </div>
   );
