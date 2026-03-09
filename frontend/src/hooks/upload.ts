@@ -20,10 +20,11 @@ export function useUpload() {
 
   const _data = query.data ?? [];
 
-  // Add fileUrl field
+  // Add fileUrl field starting with /api
   const data = [] as any[];
   for (const record of _data) {
-    const url = pb.files.getURL(record, record.image);
+    const url = `/api/files/${record.collectionId}/${record.id}/${record.image}`;
+    // const url = pb.files.getURL(record, record.image);
     data.push({ ...record, fileUrl: url });
   }
 
