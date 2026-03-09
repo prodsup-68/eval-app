@@ -62,5 +62,6 @@ export function useUpload() {
     sr_len: sr_arr.length,
     data: query.data,
     isLoading: query.isLoading,
+    refetch: query.refetch,
   };
 }
