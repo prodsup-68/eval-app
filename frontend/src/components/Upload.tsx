@@ -31,7 +31,10 @@ function Upload() {
       {uploads.course_len > 0 && (
         <div>
           <h2>Course Uploads</h2>
-          <img src={uploads.course_arr[0].fileUrl} alt="Course Upload" />
+          <UploadDisplay
+            fileUrl={uploads.course_arr[0].fileUrl}
+            task="Course"
+          />
         </div>
       )}
       <input type="file" accept="image/*" onChange={handleFileChange} />
@@ -41,3 +44,11 @@ function Upload() {
 }
 
 export default Upload;
+
+interface UploadDisplayProps {
+  fileUrl: string;
+  task: string;
+}
+function UploadDisplay({ fileUrl, task }: UploadDisplayProps) {
+  return <img src={fileUrl} alt={`${task} Upload`} />;
+}
