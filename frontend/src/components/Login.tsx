@@ -34,7 +34,7 @@ function Login() {
 
   return (
     <div className="mx-auto w-full max-w-md">
-      <div className="card border border-base-300 bg-base-100 shadow-md">
+      <div className="card border border-base-300 bg-base-100">
         <div className="card-body gap-4">
           <div>
             <h1 className="card-title text-2xl">Sign in</h1>
@@ -43,7 +43,7 @@ function Login() {
             </p>
           </div>
 
-          <form className="space-y-4" onSubmit={handleSubmit}>
+          <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label className="form-control w-full">
               <span className="label-text mb-1">Username</span>
               <input

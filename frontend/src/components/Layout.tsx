@@ -15,15 +15,12 @@ function Layout() {
       <header className="border-b border-base-300 bg-base-100">
         <nav className="navbar mx-auto max-w-6xl px-4">
           <div className="flex-1">
-            <a href="/" className="text-lg font-semibold">
-              PS-68
+            <a href="/" className="text-2xl font-bold">
+              PS68
             </a>
           </div>
 
-          <div className="flex-none gap-2">
-            <a href="/" className="btn btn-ghost btn-sm">
-              Home
-            </a>
+          <div className="flex gap-2 items-center">
             <a href="/upload" className="btn btn-ghost btn-sm">
               Upload
             </a>
@@ -32,18 +29,18 @@ function Layout() {
             </a>
 
             {!auth.isAuthenticated && (
-              <a href="/login" className="btn btn-primary btn-sm">
+              <a href="/login" className="btn btn-ghost btn-sm">
                 Login
               </a>
             )}
 
             {auth.isAuthenticated && (
-              <button className="btn btn-outline btn-sm" onClick={signOut}>
+              <button className="btn btn-ghost btn-sm" onClick={signOut}>
                 Sign Out
               </button>
             )}
 
-            <div className="badge badge-neutral badge-outline ml-1 hidden sm:inline-flex">
+            <div className="badge badge-neutral px-3 py-3">
               {auth?.data?.name ?? 'Guest'}
             </div>
           </div>

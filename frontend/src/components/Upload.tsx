@@ -13,7 +13,7 @@ function Upload() {
       <div>
         <h1 className="text-3xl font-bold">Upload</h1>
         <p className="mt-1 text-sm text-base-content/70">
-          Submit evaluation images for each task.
+          ส่งหลักฐานการประเมิน
         </p>
       </div>
 
@@ -83,25 +83,25 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
   let title = '';
   let is_eval = false;
   if (task === 'course') {
-    title = 'Course Upload';
+    title = 'การประเมินรายวิชา';
     is_eval = auth?.data?.is_eval_course ?? false;
     if (uploads.course_len > 0) {
       fileObj = uploads.course_arr[0];
     }
   } else if (task === 'nr') {
-    title = 'NR Upload';
+    title = 'การประเมินอาจารย์ นิรันดร์ พิสุทธอานนท์';
     is_eval = auth?.data?.is_eval_nr ?? false;
     if (uploads.nr_len > 0) {
       fileObj = uploads.nr_arr[0];
     }
   } else if (task === 'ac') {
-    title = 'AC Upload';
+    title = 'การประเมินอาจารย์ อนิรุท ไชยจารุวณิช';
     is_eval = auth?.data?.is_eval_ac ?? false;
     if (uploads.ac_len > 0) {
       fileObj = uploads.ac_arr[0];
     }
   } else if (task === 'sr') {
-    title = 'SR Upload';
+    title = 'การประเมินอาจารย์ ศักดิ์เกษม ระมิงค์วงศ์';
     is_eval = auth?.data?.is_eval_sr ?? false;
     if (uploads.sr_len > 0) {
       fileObj = uploads.sr_arr[0];
@@ -116,7 +116,7 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
           <span
             className={`badge ${is_eval ? 'badge-success' : 'badge-error'} badge-outline`}
           >
-            {is_eval ? 'Evaluated' : 'Not evaluated'}
+            {is_eval ? 'Evaluated' : 'Not Evaluated'}
           </span>
         </div>
 
@@ -138,7 +138,7 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
               {!is_eval ? (
                 <span className="text-error text-sm">
                   {' '}
-                  (ความถูกต้องน้อยเกินไปกรุณาอัปโหลดไฟล์ใหม่)
+                  (ความถูกต้องน้อยเกินไป กรุณาอัปโหลดไฟล์ใหม่)
                 </span>
               ) : (
                 <span className="text-success text-sm">

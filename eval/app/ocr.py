@@ -55,6 +55,28 @@ def get_ocr_options(task):
             ],
             weights=[0.1, 0.3, 0.3, 0.3],
         )
+    elif task == "ac":
+        return dict(
+            language="tha",
+            matching_texts=[
+                "255441",
+                "อนิรุท",
+                "ไชยจารุวณิช",
+                "ประเมินแล้ว",
+            ],
+            weights=[0.1, 0.3, 0.3, 0.3],
+        )
+    elif task == "sr":
+        return dict(
+            language="tha",
+            matching_texts=[
+                "255441",
+                "ศักดิ์เกษม",
+                "ระมิงค์วงศ์",
+                "ประเมินแล้ว",
+            ],
+            weights=[0.1, 0.3, 0.3, 0.3],
+        )
     else:
         raise ValueError(f"Unknown task: {task}")
 

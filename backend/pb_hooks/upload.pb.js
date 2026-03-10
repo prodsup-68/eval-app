@@ -104,7 +104,7 @@ onRecordAfterCreateSuccess((e) => {
           `User ${userId} - OCR Score: ${weighted_score}, Eval Course: ${userRecord.get("is_eval_course")}`,
         );
     } else if (task === "nr") {
-      if (weighted_score >= 70) {
+      if (weighted_score >= 75) {
         userRecord.set("is_eval_nr", true);
       }
       $app
@@ -112,7 +112,26 @@ onRecordAfterCreateSuccess((e) => {
         .info(
           `User ${userId} - OCR Score: ${weighted_score}, Eval NR: ${userRecord.get("is_eval_nr")}`,
         );
+    } else if (task === "ac") {
+      if (weighted_score >= 75) {
+        userRecord.set("is_eval_sc", true);
+        $app
+          .logger()
+          .info(
+            `User ${userId} - OCR Score: ${weighted_score}, Eval SC: ${userRecord.get("is_eval_sc")}`,
+          );
+      }
+    } else if (task === "sr") {
+      if (weighted_score >= 75) {
+        userRecord.set("is_eval_sr", true);
+        $app
+          .logger()
+          .info(
+            `User ${userId} - OCR Score: ${weighted_score}, Eval SR: ${userRecord.get("is_eval_sr")}`,
+          );
+      }
     }
+
     $app.save(userRecord);
   } else {
     $app
