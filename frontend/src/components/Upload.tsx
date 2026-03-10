@@ -1,6 +1,6 @@
 import { pb } from '@lib/db';
 import { useMutation } from '@tanstack/react-query';
-import { useState } from 'react';
+import { useRef, useState } from 'react';
 import { useAuth } from 'src/hooks/auth';
 import { useUpload } from 'src/hooks/upload';
 
@@ -42,6 +42,9 @@ interface UploadDisplayProps {
   auth: ReturnType<typeof useAuth>;
 }
 function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
+  const previewModalRef = useRef<HTMLDialogElement | null>(null);
+  const [previewImageUrl, setPreviewImageUrl] = useState<string | null>(null);
+
   const mutationFn = async (file: File) => {
     const formData = new FormData();
     formData.append('image', file);
@@ -69,6 +72,11 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
       return;
     }
     mutation.mutate(file);
+  }
+
+  function openPreview(url: string) {
+    setPreviewImageUrl(url);
+    previewModalRef.current?.showModal();
   }
 
   let fileObj = null;
@@ -118,15 +126,26 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
               <img
                 src={fileObj.fileUrl}
                 alt={title}
-                className="h-48 w-full object-cover transition-transform duration-300 ease-out hover:scale-105"
+                className="h-48 w-full object-cover transition-transform duration-300 ease-out hover:scale-105 cursor-pointer"
+                onClick={() => openPreview(fileObj.fileUrl)}
               />
             </figure>
             <div className="text-sm text-base-content/80">
               คะแนนความถูกต้อง:{' '}
               <span className="font-semibold">
-                {fileObj?.weighted_score ?? 0}%
+                {fileObj?.weighted_score.toFixed(2) ?? 0}%
               </span>
-              {!is_eval && <span> (กรุณาอัปโหลดไฟล์ใหม่)</span>}
+              {!is_eval ? (
+                <span className="text-error text-sm">
+                  {' '}
+                  (ความถูกต้องน้อยเกินไปกรุณาอัปโหลดไฟล์ใหม่)
+                </span>
+              ) : (
+                <span className="text-success text-sm">
+                  {' '}
+                  (ความถูกต้องเพียงพอ)
+                </span>
+              )}
             </div>
           </div>
         ) : (
@@ -160,6 +179,41 @@ function UploadDisplay({ task, uploads, auth }: UploadDisplayProps) {
           </div>
         )}
       </div>
+      <ImageModal
+        modalRef={previewModalRef}
+        imageUrl={previewImageUrl}
+        title={title}
+      />
     </div>
+  );
+}
+
+interface ImageModalProps {
+  modalRef: React.RefObject<HTMLDialogElement | null>;
+  imageUrl: string | null;
+  title: string;
+}
+
+function ImageModal({ modalRef, imageUrl, title }: ImageModalProps) {
+  return (
+    <dialog ref={modalRef} className="modal">
+      <div className="modal-box w-11/12 max-w-5xl p-2">
+        {imageUrl && (
+          <img
+            src={imageUrl}
+            alt={`${title} preview`}
+            className="max-h-[80vh] w-full object-contain rounded-lg"
+          />
+        )}
+        <div className="modal-action">
+          <form method="dialog">
+            <button className="btn">Close</button>
+          </form>
+        </div>
+      </div>
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   );
 }
