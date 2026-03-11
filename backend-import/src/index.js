@@ -15,7 +15,9 @@ async function importData() {
     pb.autoCancellation(false);
 
     // 3. Load your data from a JSON file (e.g., data.json)
-    const data = JSON.parse(await readFile("./src/data/data.json", "utf-8"));
+    const data = JSON.parse(
+      await readFile("./src/data/S03_app_accounts.json", "utf-8"),
+    );
     const collectionName = "users"; // Replace with your collection's name
 
     // 4. Process and create records in chunks
