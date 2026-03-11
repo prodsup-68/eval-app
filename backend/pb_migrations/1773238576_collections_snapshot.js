@@ -718,7 +718,7 @@ migrate((app) => {
         {
           "hidden": false,
           "id": "bool202460077",
-          "name": "is_eval_class",
+          "name": "is_eval_course",
           "presentable": false,
           "required": false,
           "system": false,
@@ -750,6 +750,34 @@ migrate((app) => {
           "required": false,
           "system": false,
           "type": "bool"
+        },
+        {
+          "autogeneratePattern": "",
+          "hidden": false,
+          "id": "text1707581467",
+          "max": 0,
+          "min": 0,
+          "name": "sec",
+          "pattern": "",
+          "presentable": false,
+          "primaryKey": false,
+          "required": false,
+          "system": false,
+          "type": "text"
+        },
+        {
+          "autogeneratePattern": "",
+          "hidden": false,
+          "id": "text3415494426",
+          "max": 0,
+          "min": 0,
+          "name": "student_id",
+          "pattern": "",
+          "presentable": false,
+          "primaryKey": false,
+          "required": false,
+          "system": false,
+          "type": "text"
         }
       ],
       "fileToken": {
