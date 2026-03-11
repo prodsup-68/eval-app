@@ -1,106 +1,115 @@
 import { useAuth } from 'src/hooks/auth';
+import { useScore } from 'src/hooks/score';
 
 function Score() {
   const auth = useAuth();
+  const scores = useScore();
+  const is_allowed_to_view_score =
+    auth?.data?.is_eval_course &&
+    auth?.data?.is_eval_nr &&
+    auth?.data?.is_eval_ac &&
+    auth?.data?.is_eval_sr;
+
+  if (!is_allowed_to_view_score) {
+    return (
+      <section className="mx-auto w-full max-w-3xl space-y-6">
+        <div className="card border border-base-300 bg-base-100 shadow-sm">
+          <div className="card-body gap-6">
+            <div className="space-y-2">
+              <h1 className="text-2xl font-bold">ยังไม่สามารถดูคะแนนรวมได้</h1>
+              <p className="text-base-content/70">
+                กรุณาประเมินรายวิชาและอาจารย์ทุกท่านให้ครบก่อนดูคะแนนรวม
+              </p>
+            </div>
+
+            <div className="overflow-x-auto">
+              <table className="table table-zebra">
+                <thead>
+                  <tr>
+                    <th>หัวข้อ</th>
+                    <th className="text-right">สถานะ</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Class</td>
+                    <td className="text-right">
+                      <StatusBadge done={Boolean(auth.data?.is_eval_course)} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>นิรันดร์</td>
+                    <td className="text-right">
+                      <StatusBadge done={Boolean(auth.data?.is_eval_nr)} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>อนิรุท</td>
+                    <td className="text-right">
+                      <StatusBadge done={Boolean(auth.data?.is_eval_ac)} />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>ศักดิ์เกษม</td>
+                    <td className="text-right">
+                      <StatusBadge done={Boolean(auth.data?.is_eval_sr)} />
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div className="card-actions justify-end">
+              <a className="btn btn-primary" href="/upload">
+                ไปหน้าอัปโหลดหลักฐานการประเมิน
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+    );
+  }
 
   return (
     <section className="mx-auto w-full max-w-5xl space-y-6">
-      <div>
+      <div className="space-y-1">
         <h1 className="text-3xl font-bold">Score</h1>
-        <p className="text-base-content/70 mt-1">
-          ตรวจสอบคะแนนแต่ละส่วนผ่านแท็บด้านล่าง
-        </p>
+        <p className="text-base-content/70">ดูรายละเอียดคะแนนแต่ละหัวข้อ</p>
       </div>
 
-      <div className="card bg-base-100 border border-base-300 shadow-sm">
+      <div className="card border border-base-300 bg-base-100 shadow-sm">
         <div className="card-body p-0">
-          <div className="tabs tabs-lift">
+          <div className="tabs tabs-lift tabs-lg">
             <label className="tab px-6">
               <input type="radio" name="score_tabs" defaultChecked />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-4 me-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.347a1.125 1.125 0 0 1 0 1.972l-11.54 6.347a1.125 1.125 0 0 1-1.667-.986V5.653Z"
-                />
-              </svg>
               คะแนนรวม
             </label>
-            <div className="tab-content bg-base-100 border-base-300 p-6">
-              <ScoreDisplay auth={auth} task="course" />
+            <div className="tab-content border-base-300 bg-base-100 p-6">
+              ยังไม่มีคะแนนประกาศในตอนนี้
             </div>
 
             <label className="tab px-6">
               <input type="radio" name="score_tabs" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-4 me-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M15.182 15.182a4.5 4.5 0 0 1-6.364 0M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0ZM9.75 9.75c0 .414-.168.75-.375.75S9 10.164 9 9.75 9.168 9 9.375 9s.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Zm5.625 0c0 .414-.168.75-.375.75s-.375-.336-.375-.75.168-.75.375-.75.375.336.375.75Zm-.375 0h.008v.015h-.008V9.75Z"
-                />
-              </svg>
               นิรันดร์
             </label>
-            <div className="tab-content bg-base-100 border-base-300 p-6">
-              <ScoreDisplay auth={auth} task="nr" />
+            <div className="tab-content border-base-300 bg-base-100 p-6">
+              <ScoreDisplayNR scores={scores} />
             </div>
 
             <label className="tab px-6">
               <input type="radio" name="score_tabs" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-4 me-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M21 8.25c0-2.485-2.099-4.5-4.688-4.5-1.935 0-3.597 1.126-4.312 2.733-.715-1.607-2.377-2.733-4.313-2.733C5.1 3.75 3 5.765 3 8.25c0 7.22 9 12 9 12s9-4.78 9-12Z"
-                />
-              </svg>
               อนิรุท
             </label>
-            <div className="tab-content bg-base-100 border-base-300 p-6">
-              <ScoreDisplay auth={auth} task="ac" />
+            <div className="tab-content border-base-300 bg-base-100 p-6">
+              ยังไม่มีคะแนนประกาศในตอนนี้
             </div>
 
             <label className="tab px-6">
               <input type="radio" name="score_tabs" />
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                fill="none"
-                viewBox="0 0 24 24"
-                strokeWidth="1.5"
-                stroke="currentColor"
-                className="size-4 me-2"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  d="M7.5 3.75h9m-9 0A1.5 1.5 0 0 0 6 5.25v13.5A1.5 1.5 0 0 0 7.5 20.25h9a1.5 1.5 0 0 0 1.5-1.5V5.25a1.5 1.5 0 0 0-1.5-1.5m-9 0h9m-6 4.5h3m-3 3h3m-6.75 3h6.75"
-                />
-              </svg>
               ศักดิ์เกษม
             </label>
-            <div className="tab-content bg-base-100 border-base-300 p-6">
-              <ScoreDisplay auth={auth} task="sr" />
+            <div className="tab-content border-base-300 bg-base-100 p-6">
+              ยังไม่มีคะแนนประกาศในตอนนี้
             </div>
           </div>
         </div>
@@ -111,40 +120,141 @@ function Score() {
 
 export default Score;
 
-interface ScoreDisplayProps {
-  auth: ReturnType<typeof useAuth>;
-  task: string;
+interface ScoreDisplayNrProps {
+  scores: ReturnType<typeof useScore> | undefined;
 }
-function ScoreDisplay({ task, auth }: ScoreDisplayProps) {
-  if (task === 'course') {
-    if (
-      !auth?.data?.is_eval_course ||
-      !auth?.data?.is_eval_nr ||
-      !auth?.data?.is_eval_ac ||
-      !auth?.data?.is_eval_sr
-    ) {
-      return <p>กรุณาประเมินรายวิชาและอาจารย์ทุกท่านก่อนดูคะแนนรวม</p>;
-    }
-  } else if (task === 'nr') {
-    if (!auth?.data?.is_eval_nr) {
-      return (
-        <p>กรุณาประเมินอาจารย์ นิรันดร์ พิสุทธอานนท์ ก่อนดูคะแนนในส่วนนี้</p>
-      );
-    }
-  } else if (task === 'ac') {
-    if (!auth?.data?.is_eval_ac) {
-      return <p>กรุณาประเมินอาจารย์ อนิรุท ไชยจารุวณิช ก่อนดูคะแนนในส่วนนี้</p>;
-    }
-  } else if (task === 'sr') {
-    if (!auth?.data?.is_eval_sr) {
-      return (
-        <p>กรุณาประเมินอาจารย์ ศักดิ์เกษม ระมิงค์วงศ์ ก่อนดูคะแนนในส่วนนี้</p>
-      );
-    }
+
+function StatusBadge({ done }: { done: boolean }) {
+  if (done) {
+    return <span className="badge badge-success">ประเมินแล้ว</span>;
   }
+
+  return <span className="badge badge-error">ยังไม่ประเมิน</span>;
+}
+
+function ScoreDisplayNR({ scores }: ScoreDisplayNrProps) {
+  const data = scores?.data ?? null;
+  if (!data) {
+    return <div className="alert">ยังไม่มีคะแนน</div>;
+  }
+
+  const sc = data.scores['nr'];
+  //   console.log('scores', sc);
+  const formatValue = (value: unknown) => {
+    if (value === null) {
+      return '-';
+    }
+    if (typeof value === 'boolean') {
+      return value ? 'true' : 'false';
+    }
+    if (typeof value === 'number') {
+      if (value === 0) {
+        return '-';
+      }
+    }
+
+    return String(value);
+  };
+
   return (
-    <>
-      <p className="text-2xl font-bold">{task}</p>
-    </>
+    <section className="space-y-4">
+      <div className="rounded-box border border-base-300 bg-base-200 p-4">
+        <h3 className="text-lg font-semibold">
+          คะแนนโปรเจค {sc['group_id']} : {sc['topic']}
+        </h3>
+        <p className="text-xs text-base-content/70">
+          {sc['name']} ({sc['student_id']})
+        </p>
+      </div>
+
+      <div className="overflow-x-auto rounded-box border border-base-300">
+        <table className="table table-zebra">
+          <thead>
+            <tr>
+              <th>รายการ</th>
+              <th>คะแนน</th>
+              <th>คะแนนเต็ม</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>Proposal</td>
+              <td>{formatValue(sc.proposal)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>ERPNext: Master Data</td>
+              <td>{formatValue(sc.master_data)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>ERPNext: Purchase/Sale</td>
+              <td>{formatValue(sc.purchase_sale)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>ERPNext: Manufacturing</td>
+              <td>{formatValue(sc.manu)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>NodeRED: Monitor</td>
+              <td>{formatValue(sc.monitor)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>NodeRED: Control</td>
+              <td>{formatValue(sc.control)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>NodeRED: Notification</td>
+              <td>{formatValue(sc.notification)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>NodeRED: Storage</td>
+              <td>{formatValue(sc.storage)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>System Design</td>
+              <td>{formatValue(sc.system_design)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Integration</td>
+              <td>{formatValue(sc.integration)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Slide</td>
+              <td>{formatValue(sc.slide)}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Demo</td>
+              <td>{formatValue(sc['demo (2)'])}</td>
+              <td>2</td>
+            </tr>
+            <tr>
+              <td>Penalty</td>
+              <td>{formatValue(sc['Penalty'])}</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>Penalty Note</td>
+              <td>{formatValue(sc['Penalty Note'])}</td>
+              <td>-</td>
+            </tr>
+            <tr className="font-semibold">
+              <td>Total</td>
+              <td>{formatValue(sc['total (35)'])}</td>
+              <td>35</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
   );
 }

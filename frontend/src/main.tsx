@@ -1,5 +1,6 @@
 import AuthGuard from '@components/AuthGuard.tsx';
 import App from '@components/Home.tsx';
+import Instruction from '@components/Instruction';
 import Layout from '@components/Layout';
 import Login from '@components/Login';
 import Score from '@components/Score';
@@ -24,6 +25,7 @@ createRoot(document.getElementById('root')!).render(
             <Route element={<AuthGuard />}>
               <Route path="/score" element={<Score />} />
               <Route path="/upload" element={<Upload />} />
+              <Route path="/instruction" element={<Instruction />} />
             </Route>
           </Route>
         </Routes>

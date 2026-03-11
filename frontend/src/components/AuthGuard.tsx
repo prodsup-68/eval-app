@@ -3,7 +3,7 @@ import { useAuth } from 'src/hooks/auth';
 
 function AuthGuard() {
   const auth = useAuth();
-  console.log('AuthGuard auth:', auth);
+  // console.log('AuthGuard auth:', auth);
   if (auth.isLoading) {
     return <div>Loading...</div>;
   }

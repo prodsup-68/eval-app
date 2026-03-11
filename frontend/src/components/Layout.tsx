@@ -20,12 +20,65 @@ function Layout() {
             </a>
           </div>
 
-          <div className="flex gap-2 items-center">
+          <div className="flex items-center gap-2 lg:hidden">
+            <div className="dropdown dropdown-end">
+              <div tabIndex={0} role="button" className="btn btn-ghost btn-sm">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  className="h-5 w-5 stroke-current"
+                >
+                  <path
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                    strokeWidth="2"
+                    d="M4 6h16M4 12h16M4 18h16"
+                  />
+                </svg>
+              </div>
+              <ul
+                tabIndex={0}
+                className="menu dropdown-content z-50 mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow"
+              >
+                <li>
+                  <a href="/upload">อัพโหบด</a>
+                </li>
+                <li>
+                  <a href="/score">คะแนน</a>
+                </li>
+                <li>
+                  <a href="/instruction">คำแนะนำ</a>
+                </li>
+
+                {!auth.isAuthenticated && (
+                  <li>
+                    <a href="/login">Login</a>
+                  </li>
+                )}
+
+                {auth.isAuthenticated && (
+                  <li>
+                    <button onClick={signOut}>Sign Out</button>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            <div className="badge badge-neutral px-3 py-3">
+              {auth?.data?.name ?? 'Guest'}
+            </div>
+          </div>
+
+          <div className="hidden items-center gap-2 lg:flex">
             <a href="/upload" className="btn btn-ghost btn-sm">
-              Upload
+              อัพโหบด
             </a>
             <a href="/score" className="btn btn-ghost btn-sm">
-              Score
+              คะแนน
+            </a>
+            <a href="/instruction" className="btn btn-ghost btn-sm">
+              คำแนะนำ
             </a>
 
             {!auth.isAuthenticated && (

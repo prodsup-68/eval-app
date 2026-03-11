@@ -5,8 +5,8 @@ import { useNavigate } from 'react-router';
 import { useAuth } from 'src/hooks/auth';
 
 function Login() {
-  const [username, setUsername] = useState('test@example.com');
-  const [password, setPassword] = useState('12345678');
+  const [username, setUsername] = useState('');
+  const [password, setPassword] = useState('');
   const navigate = useNavigate();
   const auth = useAuth();
   const mutationFn = async (credentials: {
@@ -42,13 +42,12 @@ function Login() {
               Access your account to continue.
             </p>
           </div>
-
           <form className="flex flex-col gap-4" onSubmit={handleSubmit}>
             <label className="form-control w-full">
               <span className="label-text mb-1">Username</span>
               <input
                 type="text"
-                placeholder="you@example.com"
+                placeholder="CMU Email"
                 className="input input-bordered w-full"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
@@ -80,6 +79,18 @@ function Login() {
               {mutation.isPending ? 'Signing in...' : 'Login'}
             </button>
           </form>
+          <div className="alert alert-info/20 border border-info/30 items-start">
+            <div className="space-y-1 text-sm">
+              <p className="font-medium text-info">หมายเหตุการเข้าสู่ระบบ</p>
+              <p className="text-base-content/80">
+                Password จะอยู่ในรูปแบบ{' '}
+                <span className="font-semibold">"prodsupXXXX"</span> โดย{' '}
+                <span className="font-semibold">XXXX</span> คือเลข 4 หลักจาก
+                Mango Canvas Assignment ชื่อ{' '}
+                <span className="font-semibold">"เวปดูคะแนน"</span>
+              </p>
+            </div>
+          </div>
         </div>
       </div>
     </div>

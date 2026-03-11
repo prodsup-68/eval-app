@@ -11,10 +11,7 @@ function Upload() {
   return (
     <section className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Upload</h1>
-        <p className="mt-1 text-sm text-base-content/70">
-          ส่งหลักฐานการประเมิน
-        </p>
+        <h1 className="text-3xl font-bold">อัปโหลดหลักฐานการประเมิน</h1>
       </div>
 
       {uploads.isLoading && (
