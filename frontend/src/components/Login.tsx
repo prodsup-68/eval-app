@@ -15,7 +15,10 @@ function Login() {
   }) => {
     return pb
       .collection('users')
-      .authWithPassword(credentials.username, credentials.password);
+      .authWithPassword(
+        credentials.username.toLowerCase(),
+        credentials.password,
+      );
   };
 
   const mutation = useMutation({

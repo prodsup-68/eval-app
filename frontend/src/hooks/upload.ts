@@ -3,19 +3,19 @@ import { useQuery } from '@tanstack/react-query';
 
 import { useAuth } from './auth';
 
-export function useUpload() {
+export function useUpload(userId?: string) {
   const auth = useAuth();
 
   async function getUpload() {
     return pb
       .collection('uploads')
-      .getFullList({ filter: `user = "${auth?.data?.id}"` });
+      .getFullList({ filter: `user = "${userId || auth?.data?.id}"` });
   }
 
   const query = useQuery({
-    queryKey: ['upload'],
+    queryKey: ['upload', userId || auth?.data?.id],
     queryFn: getUpload,
-    enabled: !!auth.data,
+    enabled: !!auth.data || !!userId,
   });
 
   const _data = query.data ?? [];

@@ -4,7 +4,7 @@ import { useAuth } from 'src/hooks/auth';
 
 function Layout() {
   const auth = useAuth();
-
+  // console.log('auth', auth);
   function signOut() {
     pb.authStore.clear();
     auth.refetch();
@@ -42,7 +42,7 @@ function Layout() {
                 className="menu dropdown-content z-50 mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow"
               >
                 <li>
-                  <a href="/upload">อัพโหบด</a>
+                  <a href="/upload">อัพโหลด</a>
                 </li>
                 <li>
                   <a href="/score">คะแนน</a>
@@ -50,6 +50,12 @@ function Layout() {
                 <li>
                   <a href="/instruction">คำแนะนำ</a>
                 </li>
+
+                {auth.isAdmin && (
+                  <li>
+                    <a href="/evalsummary">สรุปการประเมิน</a>
+                  </li>
+                )}
 
                 {!auth.isAuthenticated && (
                   <li>
@@ -72,7 +78,7 @@ function Layout() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <a href="/upload" className="btn btn-ghost btn-sm">
-              อัพโหบด
+              อัพโหลด
             </a>
             <a href="/score" className="btn btn-ghost btn-sm">
               คะแนน
@@ -80,7 +86,11 @@ function Layout() {
             <a href="/instruction" className="btn btn-ghost btn-sm">
               คำแนะนำ
             </a>
-
+            {auth.isAdmin && (
+              <a href="/evalsummary" className="btn btn-ghost btn-sm">
+                สรุปการประเมิน
+              </a>
+            )}
             {!auth.isAuthenticated && (
               <a href="/login" className="btn btn-ghost btn-sm">
                 Login
