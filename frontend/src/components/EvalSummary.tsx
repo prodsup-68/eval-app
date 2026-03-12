@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useRef, useState } from 'react';
+import { useUpload } from 'src/hooks/upload';
 import { useUser } from 'src/hooks/user';
 
 import { useAuth } from '../hooks/auth';
@@ -131,8 +132,13 @@ function StatusBadge({ value }: { value: boolean }) {
 }
 
 function DisplayStudentList({ sec, data }: DisplayStudentListProps) {
+  const previewModalRef = useRef<HTMLDialogElement>(null);
+  const [userId, setUserId] = useState('');
   const key = `info_${sec}` as keyof ReturnType<typeof useUser>;
   const sectionInfo = (data?.[key] ?? data.info_all) as UserSummary;
+  function openPreview() {
+    previewModalRef.current?.showModal();
+  }
 
   return (
     <div className="space-y-4">
@@ -188,30 +194,110 @@ function DisplayStudentList({ sec, data }: DisplayStudentListProps) {
             </tr>
           </thead>
           <tbody>
-            {sectionInfo.data.map((user: any, idx: number) => (
-              <tr key={user.id}>
-                <td>{idx + 1}</td>
-                <td>{user.student_id}</td>
-                <td>{user.name}</td>
-                <td>
-                  <StatusBadge value={user.is_eval_course} />
-                </td>
-                <td>
-                  <StatusBadge value={user.is_eval_nr} />
-                </td>
-                <td>
-                  <StatusBadge value={user.is_eval_ac} />
-                </td>
-                <td>
-                  <StatusBadge value={user.is_eval_sr} />
-                </td>
-              </tr>
-            ))}
+            {sectionInfo.data.map((user: any, idx: number) => {
+              const showPreview =
+                user.is_eval_course ||
+                user.is_eval_nr ||
+                user.is_eval_ac ||
+                user.is_eval_sr;
+
+              return (
+                <tr
+                  key={user.id}
+                  onClick={() => {
+                    showPreview && setUserId(user.id);
+                    showPreview && openPreview();
+                  }}
+                  className={`${showPreview ? 'cursor-pointer' : ''}`}
+                >
+                  <td>{idx + 1}</td>
+                  <td>{user.student_id}</td>
+                  <td>{user.name}</td>
+                  <td>
+                    <StatusBadge value={user.is_eval_course} />
+                  </td>
+                  <td>
+                    <StatusBadge value={user.is_eval_nr} />
+                  </td>
+                  <td>
+                    <StatusBadge value={user.is_eval_ac} />
+                  </td>
+                  <td>
+                    <StatusBadge value={user.is_eval_sr} />
+                  </td>
+                </tr>
+              );
+            })}
           </tbody>
         </table>
       </div>
+      <ImageModal userId={userId} modalRef={previewModalRef} />
     </div>
   );
 }
 
 export default EvalSummary;
+
+interface ImageModalProps {
+  userId: string;
+  modalRef: React.RefObject<HTMLDialogElement | null>;
+}
+function ImageModal({ userId, modalRef }: ImageModalProps) {
+  const upload = useUpload(userId);
+  // console.log('upload', upload);
+
+  return (
+    <>
+      <dialog ref={modalRef} className="modal">
+        <div className="modal-box w-11/12 max-w-5xl p-2">
+          <ImageDisplay
+            imageUrl={upload.course_arr[0]?.fileUrl ?? null}
+            title="Course"
+          />
+          <ImageDisplay
+            imageUrl={upload.nr_arr[0]?.fileUrl ?? null}
+            title="NR"
+          />
+          <ImageDisplay
+            imageUrl={upload.ac_arr[0]?.fileUrl ?? null}
+            title="AC"
+          />
+          <ImageDisplay
+            imageUrl={upload.sr_arr[0]?.fileUrl ?? null}
+            title="SR"
+          />
+
+          <div className="modal-action">
+            <form method="dialog">
+              <button className="btn">Close</button>
+            </form>
+          </div>
+        </div>
+        <form method="dialog" className="modal-backdrop">
+          <button>close</button>
+        </form>
+      </dialog>
+    </>
+  );
+}
+
+interface ImageDisplaylProps {
+  imageUrl: string | null;
+  title: string;
+}
+function ImageDisplay({ imageUrl, title }: ImageDisplaylProps) {
+  return (
+    <div>
+      {imageUrl && (
+        <div>
+          <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+          <img
+            src={imageUrl}
+            alt={`${title} preview`}
+            className="max-h-[80vh] w-full object-contain rounded-lg"
+          />
+        </div>
+      )}
+    </div>
+  );
+}
