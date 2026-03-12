@@ -42,7 +42,7 @@ function Layout() {
                 className="menu dropdown-content z-50 mt-3 w-52 rounded-box border border-base-300 bg-base-100 p-2 shadow"
               >
                 <li>
-                  <a href="/upload">อัพโหบด</a>
+                  <a href="/upload">อัพโหลด</a>
                 </li>
                 <li>
                   <a href="/score">คะแนน</a>
@@ -78,7 +78,7 @@ function Layout() {
 
           <div className="hidden items-center gap-2 lg:flex">
             <a href="/upload" className="btn btn-ghost btn-sm">
-              อัพโหบด
+              อัพโหลด
             </a>
             <a href="/score" className="btn btn-ghost btn-sm">
               คะแนน
