@@ -114,11 +114,11 @@ onRecordAfterCreateSuccess((e) => {
         );
     } else if (task === "ac") {
       if (weighted_score >= 75) {
-        userRecord.set("is_eval_sc", true);
+        userRecord.set("is_eval_ac", true);
         $app
           .logger()
           .info(
-            `User ${userId} - OCR Score: ${weighted_score}, Eval SC: ${userRecord.get("is_eval_sc")}`,
+            `User ${userId} - OCR Score: ${weighted_score}, Eval AC: ${userRecord.get("is_eval_ac")}`,
           );
       }
     } else if (task === "sr") {

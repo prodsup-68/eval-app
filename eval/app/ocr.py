@@ -1,3 +1,4 @@
+import random
 import re
 import subprocess
 
@@ -81,22 +82,33 @@ def get_ocr_options(task):
         raise ValueError(f"Unknown task: {task}")
 
 
-def evaluate_ocr(filepath, language, matching_texts, weights):
-    _text = pytesseract.image_to_string(Image.open(filepath), lang=language).strip()
-    text = re.sub(r"\s+", " ", _text)
-    text = re.sub(r"\n+", " ", text)
+def evaluate_ocr(filepath, language, matching_texts, weights, mock=False):
 
-    scores = []
-    for matching_text in matching_texts:
-        score = fuzz.partial_ratio(matching_text, text)
-        scores.append(dict(matching_text=matching_text, score=score))
-    weighted_score = sum(
-        score["score"] * weight for score, weight in zip(scores, weights)
-    )
-    return dict(
-        scores=scores,
-        weighted_score=weighted_score,
-        ocr_text=text,
-        filepath=filepath,
-        language=language,
-    )
+    if not mock:
+        _text = pytesseract.image_to_string(Image.open(filepath), lang=language).strip()
+        text = re.sub(r"\s+", " ", _text)
+        text = re.sub(r"\n+", " ", text)
+
+        scores = []
+        for matching_text in matching_texts:
+            score = fuzz.partial_ratio(matching_text, text)
+            scores.append(dict(matching_text=matching_text, score=score))
+        weighted_score = sum(
+            score["score"] * weight for score, weight in zip(scores, weights)
+        )
+
+        return dict(
+            scores=scores,
+            weighted_score=weighted_score,
+            ocr_text=text,
+            filepath=filepath,
+            language=language,
+        )
+    else:
+        return dict(
+            scores=[dict(matching_text=mt, score=0) for mt in matching_texts],
+            weighted_score=random.uniform(80, 100),
+            ocr_text="MOCK_TEXT",
+            filepath=filepath,
+            language=language,
+        )

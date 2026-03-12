@@ -30,7 +30,10 @@ class OCR_DIO(BaseModel):
 
 @app.post("/ocr")
 def create_item(payload: OCR_DIO):
-    print(payload)
+    # For testing purposes, we can set mock to True to avoid running actual OCR
+    mock = True
     ocr_options = get_ocr_options(payload.task)
-    res = evaluate_ocr(filepath=(storage_path / payload.url).as_posix(), **ocr_options)
+    res = evaluate_ocr(
+        filepath=(storage_path / payload.url).as_posix(), **ocr_options, mock=mock
+    )
     return dict(**res, url=payload.url)
