@@ -244,60 +244,76 @@ interface ImageModalProps {
 }
 function ImageModal({ userId, modalRef }: ImageModalProps) {
   const upload = useUpload(userId);
-  // console.log('upload', upload);
 
   return (
-    <>
-      <dialog ref={modalRef} className="modal">
-        <div className="modal-box w-11/12 max-w-5xl p-2">
+    <dialog ref={modalRef} className="modal modal-middle">
+      <div className="modal-box w-11/12 max-w-6xl border border-base-300 bg-base-100 p-0 shadow-xl">
+        <div className="flex items-center justify-between border-b border-base-300 px-5 py-4">
+          <h3 className="text-lg font-semibold">Uploaded Images</h3>
+          <form method="dialog">
+            <button
+              className="btn btn-circle btn-ghost btn-sm"
+              aria-label="Close modal"
+            >
+              ✕
+            </button>
+          </form>
+        </div>
+
+        <div className="max-h-[80vh] space-y-4 overflow-y-auto p-5">
           <ImageDisplay
             imageUrl={upload.course_arr[0]?.fileUrl ?? null}
-            title="Course"
+            title="รายวิชา"
           />
           <ImageDisplay
             imageUrl={upload.nr_arr[0]?.fileUrl ?? null}
-            title="NR"
+            title="นิรันดร์"
           />
           <ImageDisplay
             imageUrl={upload.ac_arr[0]?.fileUrl ?? null}
-            title="AC"
+            title="อนิรุท"
           />
           <ImageDisplay
             imageUrl={upload.sr_arr[0]?.fileUrl ?? null}
-            title="SR"
+            title="ศักดิ์เกษม"
           />
-
-          <div className="modal-action">
-            <form method="dialog">
-              <button className="btn">Close</button>
-            </form>
-          </div>
         </div>
-        <form method="dialog" className="modal-backdrop">
-          <button>close</button>
-        </form>
-      </dialog>
-    </>
+
+        <div className="modal-action border-t border-base-300 px-5 py-4">
+          <form method="dialog">
+            <button className="btn">Close</button>
+          </form>
+        </div>
+      </div>
+
+      <form method="dialog" className="modal-backdrop">
+        <button>close</button>
+      </form>
+    </dialog>
   );
 }
 
-interface ImageDisplaylProps {
+interface ImageDisplayProps {
   imageUrl: string | null;
   title: string;
 }
-function ImageDisplay({ imageUrl, title }: ImageDisplaylProps) {
+function ImageDisplay({ imageUrl, title }: ImageDisplayProps) {
   return (
-    <div>
-      {imageUrl && (
-        <div>
-          <h3 className="mb-2 text-lg font-semibold">{title}</h3>
+    <div className="card border border-base-300 bg-base-200/30 shadow-sm">
+      <div className="card-body gap-3 p-4">
+        <h3 className="card-title text-base">{title}</h3>
+        {imageUrl ? (
           <img
             src={imageUrl}
             alt={`${title} preview`}
-            className="max-h-[80vh] w-full object-contain rounded-lg"
+            className="max-h-[60vh] w-full rounded-lg border border-base-300 bg-base-100 object-contain"
           />
-        </div>
-      )}
+        ) : (
+          <div className="rounded-lg border border-dashed border-base-300 bg-base-100 p-6 text-sm text-base-content/70">
+            No image uploaded.
+          </div>
+        )}
+      </div>
     </div>
   );
 }
