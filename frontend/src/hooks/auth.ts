@@ -17,11 +17,15 @@ async function getAuth() {
 export function useAuth() {
   const query = useQuery({ queryKey: ['auth'], queryFn: getAuth });
 
+  const adminEmails = ['admin@example.com'];
+  const isAdmin = adminEmails.includes(query.data?.email) ?? false;
+
   return {
     data: query.data,
     isLoading: query.isLoading,
     isError: query.isError,
     isAuthenticated: !!query.data,
+    isAdmin: isAdmin,
     refetch: query.refetch,
   };
 }

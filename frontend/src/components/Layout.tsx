@@ -4,7 +4,7 @@ import { useAuth } from 'src/hooks/auth';
 
 function Layout() {
   const auth = useAuth();
-
+  console.log('auth', auth);
   function signOut() {
     pb.authStore.clear();
     auth.refetch();
@@ -51,6 +51,12 @@ function Layout() {
                   <a href="/instruction">คำแนะนำ</a>
                 </li>
 
+                {auth.isAdmin && (
+                  <li>
+                    <a href="/evalsummary">สรุปการประเมิน</a>
+                  </li>
+                )}
+
                 {!auth.isAuthenticated && (
                   <li>
                     <a href="/login">Login</a>
@@ -80,7 +86,11 @@ function Layout() {
             <a href="/instruction" className="btn btn-ghost btn-sm">
               คำแนะนำ
             </a>
-
+            {auth.isAdmin && (
+              <a href="/evalsummary" className="btn btn-ghost btn-sm">
+                สรุปการประเมิน
+              </a>
+            )}
             {!auth.isAuthenticated && (
               <a href="/login" className="btn btn-ghost btn-sm">
                 Login

@@ -1,4 +1,5 @@
 import AuthGuard from '@components/AuthGuard.tsx';
+import EvalSummary from '@components/EvalSummary';
 import App from '@components/Home.tsx';
 import Instruction from '@components/Instruction';
 import Layout from '@components/Layout';
@@ -26,6 +27,8 @@ createRoot(document.getElementById('root')!).render(
               <Route path="/score" element={<Score />} />
               <Route path="/upload" element={<Upload />} />
               <Route path="/instruction" element={<Instruction />} />
+              <Route path="/instruction" element={<Instruction />} />
+              <Route path="/evalsummary" element={<EvalSummary />} />
             </Route>
           </Route>
         </Routes>
