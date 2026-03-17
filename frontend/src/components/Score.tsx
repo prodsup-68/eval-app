@@ -109,7 +109,7 @@ function Score() {
               ศักดิ์เกษม
             </label>
             <div className="tab-content border-base-300 bg-base-100 p-6">
-              ยังไม่มีคะแนนประกาศในตอนนี้
+              <ScoreDisplaySR scores={scores} />
             </div>
           </div>
         </div>
@@ -251,6 +251,69 @@ function ScoreDisplayNR({ scores }: ScoreDisplayNrProps) {
               <td>Total</td>
               <td>{formatValue(sc['total (35)'])}</td>
               <td>35</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+  );
+}
+
+interface ScoreDisplaySrProps {
+  scores: ReturnType<typeof useScore> | undefined;
+}
+
+function ScoreDisplaySR({ scores }: ScoreDisplaySrProps) {
+  const data = scores?.data ?? null;
+  if (!data) {
+    return <div className="alert">ยังไม่มีคะแนน</div>;
+  }
+
+  const sc = data.scores['sr'];
+  const formatValue = (value: unknown) => {
+    if (value === null) {
+      return '-';
+    }
+    if (typeof value === 'boolean') {
+      return value ? 'true' : 'false';
+    }
+    if (typeof value === 'number') {
+      if (value === 0) {
+        return '-';
+      }
+    }
+
+    return String(value);
+  };
+
+  return (
+    <section className="space-y-4">
+      <div className="rounded-box border border-base-300 bg-base-200 p-4">
+        <h3 className="text-lg font-semibold">คะแนนเการเข้าเรียนและ Quiz</h3>
+        <p className="text-xs text-base-content/70">
+          คะแนนที่ประกาศนี้เป็นคะแนนที่คิดเป็นเปอร์เซ็นต์ของคะแนนตัดเกรด
+        </p>
+      </div>
+
+      <div className="overflow-x-auto rounded-box border border-base-300">
+        <table className="table table-zebra">
+          <thead>
+            <tr>
+              <th>รายการ</th>
+              <th>คะแนน (%)</th>
+              <th>คะแนนเต็ม (%)</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>การเข้าเรียน</td>
+              <td>{formatValue(sc['sr_attendance (3%)'])}</td>
+              <td>3</td>
+            </tr>
+            <tr>
+              <td>Quiz</td>
+              <td>{formatValue(sc['sr_quiz (10%)'])}</td>
+              <td>10</td>
             </tr>
           </tbody>
         </table>
