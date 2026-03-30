@@ -16,7 +16,7 @@ async function importData() {
 
     // 3. Load your data from a JSON file (e.g., data.json)
     const data = JSON.parse(
-      await readFile("./src/data/S04_app_scores.json", "utf-8"),
+      await readFile("./src/data/S10_app_scores.json", "utf-8"),
     );
     const collectionName = "scores"; // Replace with your collection's name
 
