@@ -201,7 +201,7 @@ function ScoreDisplayNR({ scores }: ScoreDisplayNrProps) {
             <td>
               {formatValue(sc['NR Attendance (3%)'] + sc['NR Project (20%)'])}%
             </td>
-            <td>20%</td>
+            <td>23%</td>
           </tr>
         </tbody>
       </table>
